@@ -240,6 +240,63 @@ FROM
 GROUP BY st.store_id, st.city, st.country;
 
 #7h. List the top five genres in gross revenue in descending order. 
+Select name, sum(amount)
+FROM
+(
+	Select p.amount, c.name
+	from payment p
+	Left join rental r
+	ON r.rental_id = p.rental_id
+	Left join inventory i
+	ON i.inventory_id = r.inventory_id
+	Left join film f
+	ON f.film_id = i.film_id
+	Left join film_category fc
+	ON fc.film_id = f.film_id
+	Left join category c
+	ON c.category_id = fc.category_id
+) rev
+GROUP BY 
+rev.name
+ORDER BY
+sum(rev.amount) DESC LIMIT 5;
+
+#8a. In your new role as an executive, you would like to have an easy way of viewing the Top five genres by gross revenue. 
+#Use the solution from the problem above to create a view. 
+CREATE OR REPLACE VIEW top_5 as
+Select name, sum(amount)
+FROM
+(
+	Select p.amount, c.name
+	from payment p
+	Left join rental r
+	ON r.rental_id = p.rental_id
+	Left join inventory i
+	ON i.inventory_id = r.inventory_id
+	Left join film f
+	ON f.film_id = i.film_id
+	Left join film_category fc
+	ON fc.film_id = f.film_id
+	Left join category c
+	ON c.category_id = fc.category_id
+) rev
+GROUP BY 
+rev.name
+ORDER BY
+sum(rev.amount) DESC LIMIT 5;
+
+
+#8b. How would you display the view that you created in 8a?
+select * from top_5;
+
+#8c. You find that you no longer need the view top_five_genres. Write a query to delete it.
+DROP VIEW top_5;
+
+
+
+
+
+
 
 
 
