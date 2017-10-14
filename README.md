@@ -1,2 +1,2 @@
 # pagilasql
-The SQL queries in this repository represent a varied set of SQL queries that one would presumably use daily in a job interacting with a database.
+This project represents a series of SQL queries done on the pagila database to highlight my skills with SQL.
